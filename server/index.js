@@ -13,6 +13,8 @@ app.get("/api/inventory", controller.read);
 
 app.post("/api/product", controller.create);
 
+app.put("/api/product/:id", controller.update);
+
 app.delete("/api/product/:id", controller.deleteID);
 
 massive(process.env.CONNECTION_STRING)
