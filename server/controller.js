@@ -19,7 +19,19 @@ const create = (req, res, next) => {
     .catch(err => res.status(500).send(err));
 };
 
+const deleteID = (req, res, next) => {
+  //   let { id } = req.params;
+  //   console.log(id);
+  const db = req.app.get("db");
+  db.delete_product([req.params.id])
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => res.status(500).send(err));
+};
+
 module.exports = {
   read,
-  create
+  create,
+  deleteID
 };
