@@ -9,6 +9,8 @@ const massive = require("massive");
 app.use(body_parser.json());
 // app.use(express.static(__dirname + "/../public/build"));
 
+app.get("/api/inventory", controller.read);
+
 massive(process.env.CONNECTION_STRING)
   .then(db => {
     console.log(db);
