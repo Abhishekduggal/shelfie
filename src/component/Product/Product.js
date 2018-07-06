@@ -1,7 +1,7 @@
 import React from "react";
 
 const Product = props => {
-  console.log(props.inventory);
+  //   console.log(props.inventory);
   let { name, description, price, url } = props.inventory;
   return (
     <div>

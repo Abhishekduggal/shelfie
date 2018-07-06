@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+const axios = require("axios");
 
 class Form extends Component {
   constructor(props) {
@@ -14,6 +15,8 @@ class Form extends Component {
     this.updateDescriptionInput = this.updateDescriptionInput.bind(this);
     this.updatePriceInput = this.updatePriceInput.bind(this);
     this.updateUrl = this.updateUrl.bind(this);
+    this.handleClickAddProduct = this.handleClickAddProduct.bind(this);
+    this.handleClickCancelProduct = this.handleClickCancelProduct.bind(this);
   }
   updateNameInput(name) {
     this.setState({ name: name });
@@ -31,10 +34,22 @@ class Form extends Component {
     this.setState({ url: url });
   }
 
+  createProduct(name, description, price, url) {
+    //let { name, description, price, url } = this.state;
+
+    axios.post("/api/product", { name, description, price, url }).then(res => {
+      console.log(res.data);
+      this.props.getRequest();
+      // this.setState({ : res.data });
+    });
+  }
+
   handleClickAddProduct() {
     let { name, description, price, url } = this.state;
-    this.props.AddProduct(name, description, price, url);
+    // console.log(name, description, price, url);
+    //this.props.AddProduct(name, description, price, url);
     // AddProduct Method will be created in App Js and passed along to form
+    this.createProduct(name, description, price, url);
 
     this.setState({
       name: "",
@@ -45,7 +60,7 @@ class Form extends Component {
   }
 
   handleClickCancelProduct() {
-    let { name, description, price, url } = this.state;
+    //let { name, description, price, url } = this.state;
     this.setState({
       name: "",
       description: "",

@@ -11,6 +11,8 @@ app.use(body_parser.json());
 
 app.get("/api/inventory", controller.read);
 
+app.post("/api/product", controller.create);
+
 massive(process.env.CONNECTION_STRING)
   .then(db => {
     console.log(db);
