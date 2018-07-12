@@ -12,9 +12,16 @@ class App extends Component {
     super();
 
     this.state = {
-      inventory: []
+      inventory: [],
+      selectedID: null
     };
     this.getRequest = this.getRequest.bind(this);
+    this.selectedProduct = this.selectedProduct.bind(this);
+  }
+
+  selectedProduct(selectedID) {
+    this.setState({ selectedID: selectedID });
+    console.log(selectedID);
   }
 
   getRequest() {
@@ -35,10 +42,14 @@ class App extends Component {
           <Dashboard
             inventory={this.state.inventory}
             getRequest={this.getRequest}
+            selectedProduct={this.selectedProduct}
           />
-          <Form getRequest={this.getRequest} />
+          <Form
+            getRequest={this.getRequest}
+            selectedID={this.state.selectedID}
+          />
+          {/* {routes} */}
         </div>
-        {/* {routes} */}
       </HashRouter>
     );
   }

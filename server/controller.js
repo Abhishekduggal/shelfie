@@ -20,13 +20,13 @@ const create = (req, res, next) => {
 };
 
 const update = (req, res, next) => {
-  //   let { id } = req.params;
-  //   console.log(id);
   let { id } = req.params;
+  console.log(id);
+  //   let { id } = req.params;
   let { name, description, price, image_url } = req.body;
 
   const db = req.app.get("db");
-  db.update_product([req.params.id, req.params.description])
+  db.update_product([id, name, description, price, image_url])
     .then(response => {
       res.status(200).send(response);
     })

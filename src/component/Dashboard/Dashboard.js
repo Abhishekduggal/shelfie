@@ -20,7 +20,11 @@ class Dashboard extends Component {
       //console.log(item);
       return (
         <div key={i} className="dashboard_inventory">
-          <Product inventory={item} deleteProduct={this.deleteProduct} />
+          <Product
+            inventory={item}
+            deleteProduct={this.deleteProduct}
+            selectedProduct={this.props.selectedProduct}
+          />
         </div>
       );
     });

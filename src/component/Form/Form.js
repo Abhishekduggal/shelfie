@@ -6,6 +6,7 @@ class Form extends Component {
     super(props);
 
     this.state = {
+      selectedID: this.props.selectedID || null,
       name: "",
       description: "",
       price: "",
@@ -17,6 +18,7 @@ class Form extends Component {
     this.updateUrl = this.updateUrl.bind(this);
     this.handleClickAddProduct = this.handleClickAddProduct.bind(this);
     this.handleClickCancelProduct = this.handleClickCancelProduct.bind(this);
+    this.handleClickEditProduct = this.handleClickEditProduct.bind(this);
   }
   updateNameInput(name) {
     this.setState({ name: name });
@@ -69,8 +71,46 @@ class Form extends Component {
     });
   }
 
+  handleClickEditProduct() {
+    let { name, description, price } = this.state;
+    let image_url = this.state.url;
+    // console.log(name, description, price, image_url);
+
+    axios
+      .put(`/api/product/${this.props.selectedID}`, {
+        name,
+        description,
+        price,
+        image_url
+      })
+      .then(res => {
+        console.log(res.data);
+        this.props.getRequest();
+      });
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(prevProps);
+    if (prevProps.selectedID !== this.props.selectedID) {
+      //   console.log("Yoo");
+      this.setState({ selectedID: this.props.selectedID });
+    }
+  }
   render() {
     let { name, description, price, url } = this.state;
+
+    let submitButton =
+      this.state.selectedID === null ? (
+        <div className="Add_Product">
+          <button onClick={this.handleClickAddProduct}>Add Product</button>
+        </div>
+      ) : (
+        <div className="Save_Product">
+          <button onClick={this.handleClickEditProduct}>Save Changes</button>
+        </div>
+      );
+
+    // console.log(this.props);
     return (
       <section>
         <h3>Form</h3>
@@ -102,9 +142,7 @@ class Form extends Component {
           onChange={e => this.updateUrl(e.target.value)}
         />
 
-        <div className="Add_Product">
-          <button onClick={this.handleClickAddProduct}>Add Product</button>
-        </div>
+        {submitButton}
 
         <div className="Cancel_Product">
           <button onClick={this.handleClickCancelProduct}>

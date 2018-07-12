@@ -10,7 +10,8 @@ const Product = props => {
       {name}
       {description}
       {price}
-      {url}
+      <img src={url} alt={url} />
+      <button onClick={() => props.selectedProduct(product_id)}> Edit </button>
       <button onClick={() => props.deleteProduct(product_id)}>
         Delete Product
       </button>
