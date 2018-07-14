@@ -17,6 +17,8 @@ app.put("/api/product/:id", controller.update);
 
 app.delete("/api/product/:id", controller.deleteID);
 
+app.get("/api/product/:id", controller.getOne);
+
 massive(process.env.CONNECTION_STRING)
   .then(db => {
     console.log(db);

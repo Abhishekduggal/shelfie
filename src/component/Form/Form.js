@@ -6,7 +6,7 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      selectedID: this.props.selectedID || null,
+      selectedID: this.props.match.params.id || null,
       name: "",
       description: "",
       price: "",
@@ -77,7 +77,7 @@ class Form extends Component {
     // console.log(name, description, price, image_url);
 
     axios
-      .put(`/api/product/${this.props.selectedID}`, {
+      .put(`/api/product/${this.props.match.params.id}`, {
         name,
         description,
         price,
@@ -85,20 +85,26 @@ class Form extends Component {
       })
       .then(res => {
         console.log(res.data);
-        this.props.getRequest();
+        // this.props.getRequest();
       });
+  }
+
+  async componentDidMount() {
+    let res = await axios.get(`/api/product/${this.props.match.params.id}`);
+    let { name, description, price, url } = res.data[0];
+    this.setState({ name, description, price, url });
   }
 
   componentDidUpdate(prevProps) {
     console.log(prevProps);
-    if (prevProps.selectedID !== this.props.selectedID) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
       //   console.log("Yoo");
-      this.setState({ selectedID: this.props.selectedID });
+      this.setState({ selectedID: this.props.match.params.id });
     }
   }
   render() {
     let { name, description, price, url } = this.state;
-
+    console.log(this.props);
     let submitButton =
       this.state.selectedID === null ? (
         <div className="Add_Product">
@@ -110,7 +116,7 @@ class Form extends Component {
         </div>
       );
 
-    // console.log(this.props);
+    console.log(this.props);
     return (
       <section>
         <h3>Form</h3>

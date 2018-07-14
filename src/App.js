@@ -8,47 +8,13 @@ import routes from "./routes";
 const axios = require("axios");
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      inventory: [],
-      selectedID: null
-    };
-    this.getRequest = this.getRequest.bind(this);
-    this.selectedProduct = this.selectedProduct.bind(this);
-  }
-
-  selectedProduct(selectedID) {
-    this.setState({ selectedID: selectedID });
-    console.log(selectedID);
-  }
-
-  getRequest() {
-    axios.get("/api/inventory").then(res => {
-      //console.log(res.data);
-      this.setState({ inventory: res.data });
-    });
-  }
-  componentDidMount() {
-    this.getRequest();
-  }
-
   render() {
+    console.log(this.props);
     return (
       <HashRouter>
         <div className="App">
           <Header />
-          <Dashboard
-            inventory={this.state.inventory}
-            getRequest={this.getRequest}
-            selectedProduct={this.selectedProduct}
-          />
-          <Form
-            getRequest={this.getRequest}
-            selectedID={this.state.selectedID}
-          />
-          {/* {routes} */}
+          {routes}
         </div>
       </HashRouter>
     );
